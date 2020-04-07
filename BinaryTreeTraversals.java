@@ -56,6 +56,61 @@ public class BinaryTreeTraversals {
         }
     }
 
+    private void traversePostOrder(Node root) {
+        Stack<Node> stack = new Stack<>();
+        while (true) {
+            if (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            if(stack.isEmpty()) {
+                return;
+            }
+            else {
+                if(stack.peek().right==null) {
+                    root = stack.pop();
+                    System.out.print(" " + root.data);
+                    if(root==stack.peek().right) {
+                        System.out.print(" " + stack.peek().data);
+                        stack.pop();
+                    }
+                }
+                if(!stack.isEmpty()) 
+                    root=stack.peek().right;
+                
+                else 
+                    root=null;
+                
+            }
+            stack.clear();
+        }
+    }
+
+    private void traversePostOrderByRecursion(Node root) {
+        if (root != null) {
+            traversePostOrderByRecursion(root.left);
+            traversePostOrderByRecursion(root.right);
+            System.out.print(" " + root.data);
+        }
+    }
+
+    private void traversePreOrderByRecursion(Node root) {
+        if (root != null) {
+            System.out.print(" " + root.data);
+            traversePreOrderByRecursion(root.left);
+            traversePreOrderByRecursion(root.right);
+
+        }
+    }
+
+    private void traverseInOrderByRecursion(Node root) {
+        if (root != null) {
+            traverseInOrderByRecursion(root.left);
+            System.out.print(" " + root.data);
+            traverseInOrderByRecursion(root.right);
+        }
+    }
+
     public static void main(String[] args) {
         BinaryTreeTraversals obj = new BinaryTreeTraversals();
         Node root = obj.createBinaryTree();
@@ -64,5 +119,17 @@ public class BinaryTreeTraversals {
         System.out.println("");
         System.out.println("Preorder : ");
         obj.traversePreOrder(root);
+        System.out.println("");
+        System.out.println("Postorder : ");
+        obj.traversePostOrder(root);
+        System.out.println("");
+        System.out.println("Postorder by recursion : ");
+        obj.traversePostOrderByRecursion(root);
+        System.out.println("");
+        System.out.println("preorder by recursion : ");
+        obj.traversePreOrderByRecursion(root);
+        System.out.println("");
+        System.out.println("inorder by recursion : ");
+        obj.traverseInOrderByRecursion(root);
     }
 }
