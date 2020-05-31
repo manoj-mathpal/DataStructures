@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import dataStructure.tree.BoundaryLevelTraversal.Node;
+
 public class BinaryTree {
     static Node node;
     static Node node1;
@@ -35,7 +37,6 @@ public class BinaryTree {
         root.left = new Node(25);
         node1 = root.left.left = new Node(10);
         node2 = root.left.right = new Node(30);
-        root.left.right.left = new Node(27);
         root.right = new Node(75);
         root.right.left = new Node(60);
         node = root.right.right = new Node(90);
@@ -356,6 +357,51 @@ public class BinaryTree {
             System.out.print(" " + collection);
         }
     }
+    
+    private void boundaryLevelTraversal() {
+        BinaryTree obj = new BinaryTree();
+        Node root = obj.createBinaryTree();
+        if (root == null)
+            return;
+        System.out.print(root.data + " ");
+        obj.printLeftBoundaryNodes(root.left);
+        obj.printLeaveNodes(root.left);
+        obj.printLeaveNodes(root.right);
+        obj.printRightBoundaryNodes(root.right);
+    }
+    
+    private void printRightBoundaryNodes(Node node) {
+        if (node == null)
+            return;
+        if (node.right != null) {
+            printRightBoundaryNodes(node.right);
+            System.out.print(node.data + " ");
+        } else if (node.left != null) {
+            printRightBoundaryNodes(node.left);
+            System.out.print(node.data + " ");
+        }
+    }
+
+    private void printLeaveNodes(Node node) {
+        if (node == null)
+            return;
+        printLeaveNodes(node.left);
+        if (node.left == null && node.right == null)
+            System.out.print(node.data + " ");
+        printLeaveNodes(node.right);
+    }
+
+    private void printLeftBoundaryNodes(Node node) {
+        if (node == null)
+            return;
+        if (node.left != null) {
+            System.out.print(node.data + " ");
+            printLeftBoundaryNodes(node.left);
+        } else if (node.right != null) {
+            System.out.print(node.data + " ");
+            printLeftBoundaryNodes(node.right);
+        }
+    }
 
     public static int heightOfTree(Node root) {
         if (null == root)
@@ -507,8 +553,8 @@ public class BinaryTree {
         // obj.printVerticalNodes();
         // int diameter = obj.diameter(root);
         // System.out.println("diameter of the tree is : " + diameter);
-        // Node lcaNode = obj.lca(root, node1, node2);
-        // System.out.println("lowest common ancestor is : " + lcaNode.data);
+         //Node lcaNode = obj.lca(root, node1, node2);
+         //System.out.println("lowest common ancestor is : " + lcaNode.data);
         // arr = new int[obj.findSize(root)];
         // obj.root2LeafPath(root, arr);
         // System.out.println("is tree balanced : " + obj.isBinaryTreeBalanced(root));
